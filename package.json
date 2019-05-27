@@ -4,7 +4,8 @@
   "description": "A GitHub star aggregation library for graphs.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/entrostat/github-stars-to-csv/issues"
   },
-  "homepage": "https://github.com/entrostat/github-stars-to-csv#readme"
+  "homepage": "https://github.com/entrostat/github-stars-to-csv#readme",
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  }
 }
