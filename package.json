@@ -1,0 +1,37 @@
+{
+  "name": "@kerren/github-stars-to-csv",
+  "version": "0.1.0",
+  "description": "A GitHub star aggregation library for graphs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/entrostat/github-stars-to-csv.git"
+  },
+  "bin": {
+    "@kerren/github-stars-to-csv": "bin/github-stars-to-csv",
+    "github-stars-to-csv": "bin/github-stars-to-csv"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "github",
+    "stars",
+    "stargazers",
+    "cli",
+    "csv"
+  ],
+  "author": "Kerren Ortlepp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/entrostat/github-stars-to-csv/issues"
+  },
+  "homepage": "https://github.com/entrostat/github-stars-to-csv#readme",
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  }
+}
