@@ -1,5 +1,5 @@
 {
-  "name": "github-stars-to-csv",
+  "name": "@kerren/github-stars-to-csv",
   "version": "1.0.0",
   "description": "A GitHub star aggregation library for graphs.",
   "main": "index.js",
@@ -10,6 +10,13 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/entrostat/github-stars-to-csv.git"
+  },
+  "bin": {
+    "@kerren/github-stars-to-csv": "bin/github-stars-to-csv",
+    "github-stars-to-csv": "bin/github-stars-to-csv"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "github",
