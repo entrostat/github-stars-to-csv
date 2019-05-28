@@ -1,13 +1,38 @@
-import { StargazerGetResponseDto } from './stargazer-get-response.dto';
+import { StargazerGetResponseDto } from './stargazer-get-request.dto';
 import * as Axios from 'axios';
 import { config } from '../config';
+import { RepoSummaryGetRequestDto } from './repo-summary-get-request.dto';
+import promiseLimit from 'promise-limit';
+
+const limit = promiseLimit<StargazerGetResponseDto[]>(
+    config.github.requestRateLimit,
+);
 
 export async function retrieveRepoStars(
     repo: string,
     token: string,
 ): Promise<StargazerGetResponseDto[]> {
-    console.log(await retrieveRepoStarPage(repo, token));
-    return [];
+    const summary = await repoSummary(repo, token);
+    const stars = summary.stargazers_count;
+    const pages = Math.ceil(stars / config.github.stargazersPerPage);
+    const requests = [];
+    for (let page = 1; page <= pages; page++) {
+        requests.push(limit(() => retrieveRepoStarPage(repo, token, page)));
+    }
+    const results = await Promise.all(requests);
+    return results.reduce((a, b) => a.concat(b), []);
+}
+
+async function repoSummary(
+    repo: string,
+    token: string,
+): Promise<RepoSummaryGetRequestDto> {
+    const headers = {
+        Authorization: `token ${token}`,
+    };
+    const url = config.github.repoUrl(repo);
+    const request = await Axios.default.get(url, { headers });
+    return request.data;
 }
 
 async function retrieveRepoStarPage(
@@ -19,7 +44,7 @@ async function retrieveRepoStarPage(
         Authorization: `token ${token}`,
         Accept: config.github.stargazerContentType,
     };
-    const url = `${config.github.stargazerUrl}?page=${page}`;
+    const url = `${config.github.stargazerUrl(repo)}?page=${page}`;
     const response = await Axios.default.get(url, { headers });
     return response.data;
 }

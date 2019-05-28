@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "promise-limit": "^2.7.0",
     "yargs": "^13.2.4"
   }
 }
