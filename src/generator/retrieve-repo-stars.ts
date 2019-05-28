@@ -12,12 +12,13 @@ const limit = promiseLimit<StargazerGetResponseDto[]>(
 export async function retrieveRepoStars(
     repo: string,
     token: string,
+    progress: ProgressTracker,
 ): Promise<StargazerGetResponseDto[]> {
     const summary = await repoSummary(repo, token);
     const stars = summary.stargazers_count;
     const pages = Math.ceil(stars / config.github.stargazersPerPage);
     const requests = [];
-    const progress = new ProgressTracker({ total: pages });
+    progress.setTotal(pages);
     for (let page = 1; page <= pages; page++) {
         requests.push(
             limit(() => retrieveRepoStarPage(repo, token, page, progress)),
