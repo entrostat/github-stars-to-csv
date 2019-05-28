@@ -18,6 +18,7 @@ export async function retrieveRepoStars(
     const stars = summary.stargazers_count;
     const pages = Math.ceil(stars / config.github.stargazersPerPage);
     const requests = [];
+    progress.reset();
     progress.setTotal(pages);
     for (let page = 1; page <= pages; page++) {
         requests.push(

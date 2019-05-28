@@ -7,6 +7,13 @@ import { mappingToCumlative } from '../generator/mapping-to-cumulative';
 
 const writeFile = promisify(fs.writeFile);
 
+interface FileData {
+    [repoName: string]: {
+        stars: DateCount;
+        cumulative: DateCount;
+    };
+}
+
 export async function createOutput(
     filename: string,
     allRepoStatistics: AllRepoStatistics,
@@ -14,12 +21,7 @@ export async function createOutput(
     const minDate = findMinDate(allRepoStatistics);
     const maxDate = findMaxDate(allRepoStatistics);
 
-    const fileData: {
-        [repoName: string]: {
-            stars: DateCount;
-            cumulative: DateCount;
-        };
-    } = {};
+    const fileData: FileData = {};
     for (const repo in allRepoStatistics) {
         if (allRepoStatistics.hasOwnProperty(repo)) {
             const normalisedCounts = normalise(
@@ -51,8 +53,13 @@ export async function createOutput(
         const line: string[] = [];
         line.push(date);
         allRepos.forEach(repo => {
-            line.push(fileData[repo].stars[date].toString());
-            line.push(fileData[repo].cumulative[date].toString());
+            try {
+                line.push(fileData[repo].stars[date].toString());
+                line.push(fileData[repo].cumulative[date].toString());
+            } catch (e) {
+                console.log(fileData[repo].stars, date);
+                throw e;
+            }
         });
         lines.push(line);
     }
@@ -67,10 +74,12 @@ function findMinDate(allRepoStatistics: AllRepoStatistics): moment.Moment {
     for (const repo in allRepoStatistics) {
         if (allRepoStatistics.hasOwnProperty(repo)) {
             const repoStatistic = allRepoStatistics[repo];
-            const date = moment(Object.keys(repoStatistic)[0]);
-            if (min === null || date.isBefore(min)) {
-                min = date;
-            }
+            const keys = Object.keys(repoStatistic);
+            keys.map(key => moment(key)).forEach(date => {
+                if (min === null || date.isSameOrBefore(min)) {
+                    min = date;
+                }
+            });
         }
     }
     return min;
@@ -83,10 +92,11 @@ function findMaxDate(allRepoStatistics: AllRepoStatistics): moment.Moment {
         if (allRepoStatistics.hasOwnProperty(repo)) {
             const repoStatistic = allRepoStatistics[repo];
             const keys = Object.keys(repoStatistic);
-            const date = moment(keys[keys.length - 1]);
-            if (max === null || date.isAfter(max)) {
-                max = date;
-            }
+            keys.map(key => moment(key)).forEach(date => {
+                if (max === null || date.isSameOrAfter(max)) {
+                    max = date;
+                }
+            });
         }
     }
     return max;
@@ -103,5 +113,20 @@ function normalise(
         dateCounts[dateString] = dateCounts[dateString] || 0;
         current.add(1, 'day');
     }
-    return dateCounts;
+
+    const sortedDateCounts: DateCount = {};
+    Object.keys(dateCounts)
+        .sort((a, b) => {
+            const aDate = moment(a);
+            const bDate = moment(b);
+            if (aDate.isSame(bDate)) {
+                return 0;
+            }
+            return aDate.isBefore(bDate) ? -1 : 1;
+        })
+        .forEach(key => {
+            sortedDateCounts[key] = dateCounts[key];
+        });
+
+    return sortedDateCounts;
 }
