@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist && tsc",
-    "start": "bin/github-stars-to-csv"
+    "start": "bin/github-stars-to-csv",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
