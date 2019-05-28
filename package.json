@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "rm -rf dist && tsc",
+    "start": "bin/github-stars-to-csv"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,10 @@
   },
   "homepage": "https://github.com/entrostat/github-stars-to-csv#readme",
   "devDependencies": {
+    "@types/yargs": "^13.0.0",
     "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "yargs": "^13.2.4"
   }
 }
