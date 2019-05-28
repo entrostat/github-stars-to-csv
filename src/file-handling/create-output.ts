@@ -13,6 +13,7 @@ export async function createOutput(
         allRepoStatistics.hasOwnProperty(key),
     );
 
+    lines[0].push('date');
     allRepos.forEach(repo => {
         lines[0].push(`${repo} stars`);
         lines[0].push(`${repo} cumulative`);
@@ -22,6 +23,7 @@ export async function createOutput(
 
     for (const date of dates) {
         const line: string[] = [];
+        line.push(date);
         allRepos.forEach(repo => {
             line.push(allRepoStatistics[repo].stars[date].toString());
             line.push(allRepoStatistics[repo].cumulative[date].toString());

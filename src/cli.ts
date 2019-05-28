@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import * as Yargs from 'yargs';
-import { retrieveRepoStars } from './generator/retrieve-repo-stars';
-import { mapRepoStars } from './generator/map-repo-stars';
+import * as path from 'path';
 import { ProgressTracker } from './shared/progress-tracker';
 import { generateRepoStatistics } from './generator/generate-repo-statistics';
 import * as ora from 'ora';
 import { AllRepoStatistics } from './file-handling/all-repo-statistics';
+import { createOutput } from './file-handling/create-output';
 
 async function run() {
     const incomingArguments: any = Yargs.scriptName('github-stars-to-csv')
@@ -19,6 +19,12 @@ async function run() {
             alias: 'token',
             demandOption: true,
             description: 'Your GitHub developer token',
+        })
+        .option('f', {
+            alias: 'file',
+            demandOption: false,
+            default: 'github_stars.csv',
+            description: 'The filename of the output file',
         })
         .showHelpOnFail(true)
         .help().argv;
@@ -45,6 +51,11 @@ async function run() {
         );
         spinner.succeed(`Generating ${repo} stats`);
     }
+
+    const fileSpinner = ora.default(`Creating file`).start();
+    const filepath = path.resolve('./', incomingArguments.file);
+    await createOutput(filepath, repoStatistics);
+    fileSpinner.succeed(`Created ${incomingArguments.file}`);
 }
 
 run()
