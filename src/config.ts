@@ -1,6 +1,10 @@
 export const config = {
     github: {
-        stargazerUrl: 'https://api.github.com/repos/nestjs/nest/stargazers',
+        repoUrl: (repo: string) => `https://api.github.com/repos/${repo}`,
+        stargazerUrl: (repo: string) =>
+            `${config.github.repoUrl(repo)}/stargazers`,
         stargazerContentType: 'application/vnd.github.v3.star+json',
+        stargazersPerPage: 30,
+        requestRateLimit: 10,
     },
 };
