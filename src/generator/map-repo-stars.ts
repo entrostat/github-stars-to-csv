@@ -9,13 +9,17 @@ export function mapRepoStars(repoStars: StargazerGetResponseDto[]): DateCount {
         unorderedResult[dateString] = (unorderedResult[dateString] || 0) + 1;
     });
     const orderedResult: DateCount = {};
-    Object.keys(unorderedResult).sort((a, b) => {
-        const aDate = moment(a);
-        const bDate = moment(b);
-        if (aDate.isSame(bDate)) {
-            return 0;
-        }
-        return aDate.isBefore(bDate) ? -1 : 1;
-    });
+    Object.keys(unorderedResult)
+        .sort((a, b) => {
+            const aDate = moment(a);
+            const bDate = moment(b);
+            if (aDate.isSame(bDate)) {
+                return 0;
+            }
+            return aDate.isBefore(bDate) ? -1 : 1;
+        })
+        .forEach(key => {
+            orderedResult[key] = unorderedResult[key];
+        });
     return orderedResult;
 }

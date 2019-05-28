@@ -3,6 +3,7 @@ import * as Yargs from 'yargs';
 import { retrieveRepoStars } from './generator/retrieve-repo-stars';
 import { mapRepoStars } from './generator/map-repo-stars';
 import { ProgressTracker } from './shared/progress-tracker';
+import { generateRepoStatistics } from './generator/generate-repo-statistics';
 
 async function run() {
     const incomingArguments: any = Yargs.scriptName('github-stars-to-csv')
@@ -20,14 +21,15 @@ async function run() {
         .showHelpOnFail(true)
         .help().argv;
 
-    const progress = new ProgressTracker();
-    const stars = await retrieveRepoStars(
+    const progress = new ProgressTracker({
+        onChange: () => console.log(progress.progress()),
+    });
+    const test = await generateRepoStatistics(
         incomingArguments.repo,
         incomingArguments.token,
         progress,
     );
-    const mapping = mapRepoStars(stars);
-    console.log(mapping);
+    console.log(test);
 }
 
 run()
