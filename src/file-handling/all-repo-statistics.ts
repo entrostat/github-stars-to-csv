@@ -1,5 +1,5 @@
-import { RepoStatistics } from '../generator/repo-statistics';
+import { DateCount } from '../generator/date-count';
 
 export interface AllRepoStatistics {
-    [repoName: string]: RepoStatistics;
+    [repoName: string]: DateCount;
 }

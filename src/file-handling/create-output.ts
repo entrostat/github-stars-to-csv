@@ -25,8 +25,7 @@ export async function createOutput(
         const line: string[] = [];
         line.push(date);
         allRepos.forEach(repo => {
-            line.push(allRepoStatistics[repo].stars[date].toString());
-            line.push(allRepoStatistics[repo].cumulative[date].toString());
+            line.push(allRepoStatistics[repo][date].toString());
         });
         lines.push(line);
     }
