@@ -13,8 +13,8 @@
     "url": "git+https://github.com/entrostat/github-stars-to-csv.git"
   },
   "bin": {
-    "@kerren/github-stars-to-csv": "bin/github-stars-to-csv",
-    "github-stars-to-csv": "bin/github-stars-to-csv"
+    "@kerren/github-stars-to-csv": "./dist/cli.js",
+    "github-stars-to-csv": "./dist/cli.js"
   },
   "publishConfig": {
     "access": "public"
