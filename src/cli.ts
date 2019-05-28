@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import * as Yargs from 'yargs';
 import { retrieveRepoStars } from './generator/retrieve-repo-stars';
+import { mapRepoStars } from './generator/map-repo-stars';
 
 async function run() {
     const incomingArguments: any = Yargs.scriptName('github-stars-to-csv')
@@ -18,7 +19,12 @@ async function run() {
         .showHelpOnFail(true)
         .help().argv;
 
-    await retrieveRepoStars(incomingArguments.repo, incomingArguments.token);
+    const stars = await retrieveRepoStars(
+        incomingArguments.repo,
+        incomingArguments.token,
+    );
+    const mapping = mapRepoStars(stars);
+    console.log(mapping);
 }
 
 run()
