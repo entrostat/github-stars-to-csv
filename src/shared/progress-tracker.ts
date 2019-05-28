@@ -23,4 +23,9 @@ export class ProgressTracker {
     setTotal(total: number) {
         this.total = total;
     }
+
+    reset() {
+        this.current = 0;
+        this.total = 0;
+    }
 }
