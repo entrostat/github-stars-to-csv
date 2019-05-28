@@ -1,15 +1,25 @@
 import { StargazerGetResponseDto } from './stargazer-get-request.dto';
 import moment from 'moment';
-
-interface DateCount {
-    [date: string]: number;
-}
+import { DateCount } from './date-count';
 
 export function mapRepoStars(repoStars: StargazerGetResponseDto[]): DateCount {
-    const result: DateCount = {};
+    const unorderedResult: DateCount = {};
     repoStars.forEach(repoStar => {
         const dateString = moment(repoStar.starred_at).format('YYYY-MM-DD');
-        result[dateString] = (result[dateString] || 0) + 1;
+        unorderedResult[dateString] = (unorderedResult[dateString] || 0) + 1;
     });
-    return result;
+    const orderedResult: DateCount = {};
+    Object.keys(unorderedResult)
+        .sort((a, b) => {
+            const aDate = moment(a);
+            const bDate = moment(b);
+            if (aDate.isSame(bDate)) {
+                return 0;
+            }
+            return aDate.isBefore(bDate) ? -1 : 1;
+        })
+        .forEach(key => {
+            orderedResult[key] = unorderedResult[key];
+        });
+    return orderedResult;
 }
