@@ -5,15 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "rm -rf dist && tsc",
+    "start": "bin/github-stars-to-csv"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/entrostat/github-stars-to-csv.git"
   },
   "bin": {
-    "@kerren/github-stars-to-csv": "bin/github-stars-to-csv",
-    "github-stars-to-csv": "bin/github-stars-to-csv"
+    "@kerren/github-stars-to-csv": "./dist/cli.js",
+    "github-stars-to-csv": "./dist/cli.js"
   },
   "publishConfig": {
     "access": "public"
@@ -32,6 +33,15 @@
   },
   "homepage": "https://github.com/entrostat/github-stars-to-csv#readme",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/moment": "^2.13.0",
+    "@types/yargs": "^13.0.0",
     "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "moment": "^2.24.0",
+    "promise-limit": "^2.7.0",
+    "yargs": "^13.2.4"
   }
 }
