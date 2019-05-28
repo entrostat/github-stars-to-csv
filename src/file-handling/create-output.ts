@@ -47,7 +47,7 @@ export async function createOutput(
         lines[0].push(`${repo} cumulative`);
     });
     const firstKey = allRepos[0];
-    const dates = Object.keys(allRepoStatistics[firstKey]);
+    const dates = Object.keys(fileData[firstKey].stars);
 
     for (const date of dates) {
         const line: string[] = [];
