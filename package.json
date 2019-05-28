@@ -33,10 +33,12 @@
   },
   "homepage": "https://github.com/entrostat/github-stars-to-csv#readme",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/yargs": "^13.0.0",
     "typescript": "^3.4.5"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "yargs": "^13.2.4"
   }
 }
