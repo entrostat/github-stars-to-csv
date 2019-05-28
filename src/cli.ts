@@ -5,6 +5,7 @@ import { mapRepoStars } from './generator/map-repo-stars';
 import { ProgressTracker } from './shared/progress-tracker';
 import { generateRepoStatistics } from './generator/generate-repo-statistics';
 import * as ora from 'ora';
+import { AllRepoStatistics } from './file-handling/all-repo-statistics';
 
 async function run() {
     const incomingArguments: any = Yargs.scriptName('github-stars-to-csv')
@@ -31,7 +32,7 @@ async function run() {
         : [incomingArguments.repo];
     const token = incomingArguments.token;
 
-    const repoStatistics: any = {};
+    const repoStatistics: AllRepoStatistics = {};
     for (const repo of repos) {
         const spinner = ora.default(`Generating ${repo} stats`).start();
         progress.onChange = () => {
