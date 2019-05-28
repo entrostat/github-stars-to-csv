@@ -1,5 +1,5 @@
 # Github Stars to CSV
-A GitHub star aggregation library for graphs and stuff.
+A GitHub star aggregation library for graphs. Just get a GitHub personal access token from your account settings page and run the cli to generate a `.csv` file with a timeline of the stars for one or more repo.
 
 # Usage
 
