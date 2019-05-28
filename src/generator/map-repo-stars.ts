@@ -21,5 +21,20 @@ export function mapRepoStars(repoStars: StargazerGetResponseDto[]): DateCount {
         .forEach(key => {
             orderedResult[key] = unorderedResult[key];
         });
+
+    const orderedKeys = Object.keys(orderedResult).filter(key =>
+        orderedResult.hasOwnProperty(key),
+    );
+    const firstDate = orderedKeys[0];
+    const lastDate = orderedKeys[orderedKeys.length - 1];
+
+    const current = moment(firstDate);
+    const endDate = moment(lastDate);
+    while (current.isBefore(endDate)) {
+        const dateString = current.format('YYYY-MM-DD');
+        orderedResult[dateString] = orderedResult[dateString] || 0;
+        current.add(1, 'day');
+    }
+
     return orderedResult;
 }
