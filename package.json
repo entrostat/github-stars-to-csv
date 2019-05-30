@@ -8,7 +8,9 @@
     "build": "rm -rf dist && tsc",
     "start": "bin/github-stars-to-csv"
   },
-  "files": [ "dist/**/*.js" ],
+  "files": [
+    "dist/**/*.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/entrostat/github-stars-to-csv.git"
