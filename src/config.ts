@@ -7,4 +7,5 @@ export const config = {
         stargazersPerPage: 30,
         requestRateLimit: 10,
     },
+    maximumRepeatedRequests: 100,
 };
