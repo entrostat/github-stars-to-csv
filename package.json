@@ -1,14 +1,14 @@
 {
-  "name": "@kerren/github-stars-to-csv",
-  "version": "0.1.0",
+  "name": "github-stars-to-csv",
+  "version": "1.0.3",
   "description": "A GitHub star aggregation library for graphs.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist && tsc",
-    "start": "bin/github-stars-to-csv",
-    "postinstall": "npm run build"
+    "start": "bin/github-stars-to-csv"
   },
+  "files": [ "dist/**/*.js" ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/entrostat/github-stars-to-csv.git"
