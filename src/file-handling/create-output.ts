@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import moment from 'moment';
 import { DateCount } from '../generator/models/date-count';
 import { mappingToCumlative } from '../generator/mapping-to-cumulative';
+import { sortObjectKeys } from '../generator/sort-object-keys';
 
 const writeFile = promisify(fs.writeFile);
 
@@ -113,20 +114,5 @@ function normalise(
         dateCounts[dateString] = dateCounts[dateString] || 0;
         current.add(1, 'day');
     }
-
-    const sortedDateCounts: DateCount = {};
-    Object.keys(dateCounts)
-        .sort((a, b) => {
-            const aDate = moment(a);
-            const bDate = moment(b);
-            if (aDate.isSame(bDate)) {
-                return 0;
-            }
-            return aDate.isBefore(bDate) ? -1 : 1;
-        })
-        .forEach(key => {
-            sortedDateCounts[key] = dateCounts[key];
-        });
-
-    return sortedDateCounts;
+    return sortObjectKeys(dateCounts);
 }
