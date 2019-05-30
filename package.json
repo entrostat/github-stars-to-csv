@@ -1,11 +1,12 @@
 {
   "name": "github-stars-to-csv",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A GitHub star aggregation library for graphs.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf dist && tsc",
+    "prepublish": "npm run build",
     "start": "bin/github-stars-to-csv"
   },
   "files": [
