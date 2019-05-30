@@ -1,4 +1,4 @@
-import { DateCount } from './date-count';
+import { DateCount } from './models/date-count';
 
 export function mappingToCumlative(dateCounts: DateCount): DateCount {
     const result: DateCount = {};

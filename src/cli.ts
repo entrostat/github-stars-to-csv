@@ -4,7 +4,7 @@ import * as path from 'path';
 import { ProgressTracker } from './shared/progress-tracker';
 import { generateRepoStatistics } from './generator/generate-repo-statistics';
 import * as ora from 'ora';
-import { AllRepoStatistics } from './file-handling/all-repo-statistics';
+import { AllRepoStatistics } from './generator/models/all-repo-statistics';
 import { createOutput } from './file-handling/create-output';
 
 async function run() {

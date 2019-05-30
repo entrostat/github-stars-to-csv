@@ -1,6 +1,7 @@
-import { StargazerGetResponseDto } from './stargazer-get-request.dto';
+import { StargazerGetResponseDto } from './models/stargazer-get-request.dto';
 import moment from 'moment';
-import { DateCount } from './date-count';
+import { DateCount } from './models/date-count';
+import { sortObjectKeys } from './sort-object-keys';
 
 export function mapRepoStars(repoStars: StargazerGetResponseDto[]): DateCount {
     const unorderedResult: DateCount = {};
@@ -8,19 +9,7 @@ export function mapRepoStars(repoStars: StargazerGetResponseDto[]): DateCount {
         const dateString = moment(repoStar.starred_at).format('YYYY-MM-DD');
         unorderedResult[dateString] = (unorderedResult[dateString] || 0) + 1;
     });
-    const orderedResult: DateCount = {};
-    Object.keys(unorderedResult)
-        .sort((a, b) => {
-            const aDate = moment(a);
-            const bDate = moment(b);
-            if (aDate.isSame(bDate)) {
-                return 0;
-            }
-            return aDate.isBefore(bDate) ? -1 : 1;
-        })
-        .forEach(key => {
-            orderedResult[key] = unorderedResult[key];
-        });
+    const orderedResult: DateCount = sortObjectKeys(unorderedResult);
 
     const orderedKeys = Object.keys(orderedResult).filter(key =>
         orderedResult.hasOwnProperty(key),
