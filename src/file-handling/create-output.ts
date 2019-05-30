@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import moment from 'moment';
 import { DateCount } from '../generator/models/date-count';
 import { mappingToCumlative } from '../generator/mapping-to-cumulative';
-import { sortObjectKeys } from '../generator/sort-object-keys';
+import { normaliseDates } from './normalise-dates';
 
 const writeFile = promisify(fs.writeFile);
 
@@ -25,7 +25,7 @@ export async function createOutput(
     const fileData: FileData = {};
     for (const repo in allRepoStatistics) {
         if (allRepoStatistics.hasOwnProperty(repo)) {
-            const normalisedCounts = normalise(
+            const normalisedCounts = normaliseDates(
                 allRepoStatistics[repo],
                 minDate,
                 maxDate,
@@ -101,18 +101,4 @@ function findMaxDate(allRepoStatistics: AllRepoStatistics): moment.Moment {
         }
     }
     return max;
-}
-
-function normalise(
-    dateCounts: DateCount,
-    minDate: moment.Moment,
-    maxDate: moment.Moment,
-) {
-    const current = minDate.clone();
-    while (current.isSameOrBefore(maxDate)) {
-        const dateString = current.format('YYYY-MM-DD');
-        dateCounts[dateString] = dateCounts[dateString] || 0;
-        current.add(1, 'day');
-    }
-    return sortObjectKeys(dateCounts);
 }
