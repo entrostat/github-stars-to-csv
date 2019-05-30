@@ -47,12 +47,28 @@ async function retrieveRepoStarPage(
     page: number,
     progress: ProgressTracker,
 ): Promise<StargazerGetResponseDto[]> {
-    const headers = {
-        Authorization: `token ${token}`,
-        Accept: config.github.stargazerContentType,
-    };
-    const url = `${config.github.stargazerUrl(repo)}?page=${page}`;
-    const response = await Axios.default.get(url, { headers });
-    progress.increase();
-    return response.data;
+    const maxRequests = config.maximumRepeatedRequests;
+    for (let i = 0; i < maxRequests; i++) {
+        try {
+            const headers = {
+                Authorization: `token ${token}`,
+                Accept: config.github.stargazerContentType,
+            };
+            const url = `${config.github.stargazerUrl(repo)}?page=${page}`;
+            const response = await Axios.default.get(url, { headers });
+            progress.increase();
+            return response.data;
+        } catch (e) {
+            console.error(
+                `It looks like we hit an error, I'm retrying the request, so far I've run this request ${i} times. The error message was as follows: ${
+                    e.message
+                }.`,
+            );
+        }
+    }
+    throw new Error(
+        `I've attempted the request ${
+            config.maximumRepeatedRequests
+        } times and it still failed. You'll have to try again later :/`,
+    );
 }
