@@ -8,4 +8,5 @@ export const config = {
         requestRateLimit: 10,
     },
     maximumRepeatedRequests: 100,
+    repeatRequestDelay: 1000,
 };
