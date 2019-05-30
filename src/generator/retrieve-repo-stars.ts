@@ -1,7 +1,7 @@
-import { StargazerGetResponseDto } from './stargazer-get-request.dto';
+import { StargazerGetResponseDto } from './models/stargazer-get-request.dto';
 import * as Axios from 'axios';
 import { config } from '../config';
-import { RepoSummaryGetRequestDto } from './repo-summary-get-request.dto';
+import { RepoSummaryGetRequestDto } from './models/repo-summary-get-request.dto';
 import promiseLimit from 'promise-limit';
 import { ProgressTracker } from '../shared/progress-tracker';
 

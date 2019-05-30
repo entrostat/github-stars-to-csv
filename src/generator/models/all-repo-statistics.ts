@@ -1,4 +1,4 @@
-import { DateCount } from '../generator/date-count';
+import { DateCount } from './date-count';
 
 export interface AllRepoStatistics {
     [repoName: string]: DateCount;
