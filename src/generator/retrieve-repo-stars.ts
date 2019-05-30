@@ -4,6 +4,7 @@ import { config } from '../config';
 import { RepoSummaryGetRequestDto } from './models/repo-summary-get-request.dto';
 import promiseLimit from 'promise-limit';
 import { ProgressTracker } from '../shared/progress-tracker';
+import { delay } from './delay';
 
 const limit = promiseLimit<StargazerGetResponseDto[]>(
     config.github.requestRateLimit,
@@ -64,6 +65,7 @@ async function retrieveRepoStarPage(
                     e.message
                 }.`,
             );
+            await delay(config.repeatRequestDelay);
         }
     }
     throw new Error(
