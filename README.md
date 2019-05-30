@@ -1,6 +1,19 @@
 # Github Stars to CSV
 A GitHub star aggregation library for graphs. Just get a GitHub personal access token from your account settings page and run the cli to generate a `.csv` file with a timeline of the stars for one or more repo.
 
+# Output
+When you run this function, it returns a table of a timeline of the star count for each repository you select. The output looks as follows,
+
+| date       | repoA stars | repoA cumulative | repoB stars | repoB cumulative |
+|------------|-------------|------------------|-------------|------------------|
+| 2019-01-01 | 1           | 1                | 0           | 0                |
+| 2019-01-02 | 2           | 3                | 0           | 0                |
+| 2019-01-03 | 0           | 3                | 0           | 0                |
+| 2019-01-04 | 0           | 3                | 1           | 1                |
+| 2019-01-05 | 3           | 6                | 0           | 1                |
+| 2019-01-06 | 2           | 8                | 1           | 2                |
+| 2019-01-07 | 2           | 10               | 2           | 4                |
+
 # Usage
 In order to use this package, you'll need to generate a GitHub personal access token. To do this, follow the steps below,
 
