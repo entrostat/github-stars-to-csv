@@ -1,8 +1,8 @@
-import { AllRepoStatistics } from './all-repo-statistics';
+import { AllRepoStatistics } from '../generator/models/all-repo-statistics';
 import { promisify } from 'util';
 import * as fs from 'fs';
 import moment from 'moment';
-import { DateCount } from '../generator/date-count';
+import { DateCount } from '../generator/models/date-count';
 import { mappingToCumlative } from '../generator/mapping-to-cumulative';
 
 const writeFile = promisify(fs.writeFile);

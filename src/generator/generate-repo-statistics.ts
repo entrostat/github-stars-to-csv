@@ -1,7 +1,7 @@
 import { ProgressTracker } from '../shared/progress-tracker';
 import { retrieveRepoStars } from './retrieve-repo-stars';
 import { mapRepoStars } from './map-repo-stars';
-import { DateCount } from './date-count';
+import { DateCount } from './models/date-count';
 
 export async function generateRepoStatistics(
     repo: string,

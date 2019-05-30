@@ -1,6 +1,6 @@
-import { StargazerGetResponseDto } from './stargazer-get-request.dto';
+import { StargazerGetResponseDto } from './models/stargazer-get-request.dto';
 import moment from 'moment';
-import { DateCount } from './date-count';
+import { DateCount } from './models/date-count';
 
 export function mapRepoStars(repoStars: StargazerGetResponseDto[]): DateCount {
     const unorderedResult: DateCount = {};
