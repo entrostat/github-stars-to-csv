@@ -18,9 +18,9 @@ export async function retrieveRepoStars(
     token: string,
     progress: ProgressTracker,
 ): Promise<SingleStargazer[]> {
-    const summary = await repoSummary(repo, token);
-    const stars = summary.stargazers_count;
-    const pages = Math.ceil(stars / config.github.stargazersPerPage);
+    const summary = await retrieveRepoStarPage(repo, token, null, progress);
+    const stars = summary.data.repository.stargazers.totalCount;
+    const pages = Math.ceil(stars / config.github.graphqlMaximumRecordsPerPage);
     const requests: SingleStargazer[][] = [];
     progress.reset();
     progress.setTotal(pages);
@@ -38,18 +38,6 @@ export async function retrieveRepoStars(
         requests.push(stargazers.data.repository.stargazers.edges);
     }
     return requests.reduce((a, b) => a.concat(b), []);
-}
-
-async function repoSummary(
-    repo: string,
-    token: string,
-): Promise<RepoSummaryGetRequestDto> {
-    const headers = {
-        Authorization: `token ${token}`,
-    };
-    const url = config.github.repoUrl(repo);
-    const request = await Axios.default.get(url, { headers });
-    return request.data;
 }
 
 async function retrieveRepoStarPage(
@@ -101,14 +89,14 @@ function generateQuery(repo: string, cursor: string | null = null): string {
 
     let cursorInfo = '';
     if (cursor) {
-        cursorInfo = `, after: ${cursor}`;
+        cursorInfo = `, after: "${cursor}"`;
     }
     return `
         query { 
-            repository(owner: ${matches[1]}, name: ${matches[2]}) { 
+            repository(owner: "${matches[1]}", name: "${matches[2]}") { 
                 stargazers(first: ${
                     config.github.graphqlMaximumRecordsPerPage
-                } ${cursorInfo}) { 
+                }${cursorInfo}) { 
                     edges { 
                         starredAt 
                         cursor 
