@@ -1,6 +1,6 @@
 {
   "name": "github-stars-to-csv",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "A GitHub star aggregation library for graphs.",
   "main": "index.js",
   "scripts": {
