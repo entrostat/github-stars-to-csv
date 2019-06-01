@@ -1,12 +1,12 @@
-import { StargazerGetResponseDto } from './models/stargazer-get-request.dto';
+import { SingleStargazer } from './models/stargazer-get-request.dto';
 import moment from 'moment';
 import { DateCount } from './models/date-count';
 import { sortObjectKeys } from './sort-object-keys';
 
-export function mapRepoStars(repoStars: StargazerGetResponseDto[]): DateCount {
+export function mapRepoStars(repoStars: SingleStargazer[]): DateCount {
     const unorderedResult: DateCount = {};
     repoStars.forEach(repoStar => {
-        const dateString = moment(repoStar.starred_at).format('YYYY-MM-DD');
+        const dateString = moment(repoStar.starredAt).format('YYYY-MM-DD');
         unorderedResult[dateString] = (unorderedResult[dateString] || 0) + 1;
     });
     const orderedResult: DateCount = sortObjectKeys(unorderedResult);
